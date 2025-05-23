@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>TRADUCTOR</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="moonstyle.css">
+</head>
+
+<body>
+
+    <header>
+        <a class="logo" href="#">Traductor de Nickname's</a>
+        <ul>
+            <li><a href="#">Ingrid Janeth Cruz Sánchez</a></li>
+        </ul>
+    </header>
+
+    <div class="trad-box">
+        <h2>TRADUCTOR</h2>
+        <label>Ingrese su Clase y NickName separados por un espacio ejemplo: "Mago MiNick1234":</label>
+        <input type="text" id="nickName" />
+        <button onclick="traducirToTataLanguage()">Traducir</button>
+        <p>Traducción: <span id="resultado"></span></p>
+    </div>
+
+    <div class="answer">
+        <img src="lenguaje.jpg" width="200" height="200" border="0" alt="Lenguaje Tata" />
+    </div>
+
+    <script>
+        function traducirToTataLanguage()
+        {
+            const input = document.getElementById("nickName").value.trim();
+
+            // ER para validar la clase seguida por espacio y nickname de 10 caracteres alfanumericos
+            const pattern = /^(Espadachin|Mago|Arquero|Peleador|Tirador|Escudero|Lider)\s([a-zA-Z0-9]{10})$/;
+
+            const match = input.match(pattern);
+            if (!match)
+            {
+                alert("El formato ingresado no es válido. Debe ingresar una clase válida seguida de un espacio y un NickName exactamente de 10 caracteres alfanuméricos.\n\nClases válidas: Espadachin, Mago, Arquero, Peleador, Tirador, Escudero, Lider.");
+                return;
+            }
+
+            const clase = match[1];
+            const nickname = match[2];
+
+            // Mapeo del abecedario del lenguaje TATA en pronunciacion
+            const tataMap = {
+                'a': 'ta',
+                'b': 'ba',
+                'c': 'ca',
+                'd': 'da',
+                'e': 'te',
+                'f': 'fa',
+                'g': 'ga',
+                'h': 'ja',
+                'i': 'ti',
+                'j': 'ja',
+                'k': 'ka',
+                'l': 'la',
+                'm': 'ma',
+                'n': 'no',
+                'ñ': 'ña',
+                'o': 'a',
+                'p': 'pa',
+                'q': 'qa',
+                'r': 'ra',
+                's': 'sa',
+                't': 'ta2',
+                'u': 'tu',
+                'v': 'va',
+                'w': 'wa',
+                'x': 'xa',
+                'y': 'ya',
+                'z': 'za',
+            };
+
+            function traducirPalabra(palabra)
+            {
+                const lower = palabra.toLowerCase();
+                let traducido = '';
+                for (const char of lower)
+                {
+                    if (tataMap[char])
+                    {
+                        traducido += tataMap[char] + '-';
+                    }
+                    else
+                    {
+                        // Caracteres no mapeados se agregan sin cambios
+                        traducido += char;
+                    }
+                }
+                // quitar guion final si existe
+                if (traducido.endsWith('-')) {
+                    traducido = traducido.slice(0, -1);
+                }
+                return traducido;
+            }
+
+            const claseTraducida = traducirPalabra(clase);
+            const nicknameTraducido = traducirPalabra(nickname);
+
+            document.getElementById("resultado").textContent = claseTraducida + ' - ' + nicknameTraducido;
+        }
+    </script>
+</body>
+
+</html>
